@@ -52,7 +52,7 @@ export interface PricingPackage {
 // INI ADALAH OBJECT YANG AKAN KAMU EDIT SETIAP ADA PESANAN BARU
 export const clientData: ClientData = {
   global: {
-    brandName: "Asics",
+    brandName: "Shopifun",
     whatsappNumber: "6281234567890",
     primaryColor: "#470609",
     metaDescription: "Solusi bebas nyeri lutut saat lari jarak jauh dengan bantalan ganda.",
