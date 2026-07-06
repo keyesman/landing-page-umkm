@@ -54,7 +54,7 @@ export const clientData: ClientData = {
   global: {
     brandName: "Shopifun",
     whatsappNumber: "6281234567890",
-    primaryColor: "#23dff7",
+    primaryColor: "#45b045",
     metaDescription: "Solusi bebas nyeri lutut saat lari jarak jauh dengan bantalan ganda.",
     tracking: {
       ga4Id: "",
