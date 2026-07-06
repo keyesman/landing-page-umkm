@@ -1,0 +1,77 @@
+---
+// src/layouts/Layout.astro
+import { clientData } from '../data/clientConfig';
+import FloatingWA from '../components/FloatingWA.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { brandName, metaDescription, primaryColor, tracking } = clientData.global;
+---
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{brandName} - Penawaran Spesial</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="icon" type="image/svg+xml" href="/shopifun.ico" />
+    
+    <!-- Import Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Injeksi Warna Dinamis (SSOT ke Tailwind) -->
+    <style is:global define:vars={{ primaryColor }}>
+      :root {
+        --color-primary: var(--primaryColor);
+      }
+      body {
+        /* Warna background global: 5% warna utama dicampur putih */
+        background-color: color-mix(in srgb, var(--color-primary) 8%, white);
+        margin: 0;
+        font-family: sans-serif;
+      }
+    </style>
+    <style is:global>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+
+    <!-- Injeksi Tracking Script Opsional -->
+    {tracking.ga4Id && (
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${tracking.ga4Id}`}></script>
+      <script is:inline define:vars={{ ga4Id: tracking.ga4Id }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', ga4Id);
+      </script>
+    )}
+
+    {tracking.metaPixelId && (
+      <script is:inline define:vars={{ metaPixelId: tracking.metaPixelId }}>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', metaPixelId);
+        fbq('track', 'PageView');
+      </script>
+    )}
+  </head>
+  
+  <!-- CSS global: background putih, teks gelap, dan blok teks tersorot menyesuaikan warna primary -->
+  <body class="text-slate-800 antialiased selection:bg-primary selection:text-white">
+    <Header />
+    <slot />
+    <Footer />
+    <FloatingWA />
+  </body>
+</html>

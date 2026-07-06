@@ -1,0 +1,92 @@
+---
+// src/components/Pricing.astro
+import { clientData } from '../data/clientConfig';
+
+const { pricing, global, hero } = clientData;
+
+const formatRupiah = (angka: number) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(angka);
+};
+---
+
+<section id="pricing" class="py-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-4">
+        Pilih Penawaran Spesial Anda
+      </h2>
+      <p class="text-lg text-slate-600">
+        Harga promo ini sangat terbatas. Jangan sampai Anda melewatkan kesempatan emas ini.
+      </p>
+    </div>
+    
+    <div class="flex flex-col lg:flex-row justify-center items-stretch gap-8 lg:gap-6">
+      {pricing.map((pkg) => {
+        const waMessage = encodeURIComponent(`Halo admin ${global.brandName}, saya mau pesan ${pkg.packageName} yang lagi promo ${formatRupiah(pkg.discountPrice)}. Apakah masih bisa?`);
+        const waLink = `https://wa.me/${global.whatsappNumber}?text=${waMessage}`;
+
+        return (
+          <div class={`relative w-full lg:flex-1 flex flex-col bg-white rounded-3xl shadow-xl transition-all duration-300 ${pkg.isPopular ? 'border-2 border-primary lg:-translate-y-4 lg:scale-105 z-10' : 'border border-slate-200 mt-0 lg:mt-4'}`}>
+            
+            {pkg.isPopular && (
+              <div class="absolute -top-4 left-0 right-0 flex justify-center">
+                <span class="bg-primary text-white text-xs font-bold tracking-widest uppercase py-1.5 px-4 rounded-full shadow-md">
+                  Paling Laris
+                </span>
+              </div>
+            )}
+
+            <div class="p-8 sm:p-8 flex-grow flex flex-col">
+              <h3 class="text-2xl font-bold text-slate-900 text-center mb-2">
+                {pkg.packageName}
+              </h3>
+              
+              <div class="flex flex-col items-center justify-center mt-4 mb-8">
+                <span class="text-lg text-slate-400 line-through decoration-red-500 decoration-2 font-semibold mb-1">
+                  {formatRupiah(pkg.originalPrice)}
+                </span>
+                <div class="flex items-start text-primary">
+                  <span class="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                    {formatRupiah(pkg.discountPrice)}
+                  </span>
+                </div>
+              </div>
+
+              <ul class="space-y-4 mb-8 flex-grow">
+                {pkg.features.map((feature) => (
+                  <li class="flex items-start">
+                    <div class="flex-shrink-0 mt-1">
+                      <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <p class="ml-3 text-slate-700 font-medium">{feature}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <a 
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={`block w-full text-center font-bold text-lg px-6 py-4 rounded-xl shadow-md hover:opacity-90 transition-opacity mt-auto ${pkg.isPopular ? 'bg-primary text-white' : 'bg-slate-100 text-slate-900 hover:bg-slate-200'}`}
+              >
+                {hero.ctaText}
+              </a>
+              <p class="text-center text-xs text-slate-500 mt-4">
+                Aman & Terpercaya • Proses Cepat
+              </p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

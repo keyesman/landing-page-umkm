@@ -1,0 +1,69 @@
+---
+// src/components/Testimonial.astro
+import { clientData } from '../data/clientConfig';
+
+const { socialProof } = clientData;
+---
+
+<section id="testimonial" class="py-20 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-4">
+        Apa kata customer kami?
+      </h2>
+      <p class="text-lg text-slate-600">
+        Jangan hanya dengar dari kami. Lihat sendiri bukti nyata dari pelanggan kami.
+      </p>
+    </div>
+    
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 hide-scrollbar">
+      {socialProof.map((testi) => (
+        <div class="snap-center shrink-0 w-[85vw] sm:w-80 bg-slate-50 p-8 rounded-3xl border border-slate-100 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 relative">
+          
+            <!-- Ikon Kutipan (Quote) yang sudah diperkecil -->
+          <svg class="absolute top-6 right-8 text-primary/10 w-8 h-8 z-0" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M116,72v88a48.05,48.05,0,0,1-48,48,8,8,0,0,1,0-16,32,32,0,0,0,32-32v-8H40a16,16,0,0,1-16-16V72A16,16,0,0,1,40,56h60A16,16,0,0,1,116,72Zm116,0v88a48.05,48.05,0,0,1-48,48,8,8,0,0,1,0-16,32,32,0,0,0,32-32v-8H156a16,16,0,0,1-16-16V72a16,16,0,0,1,16-16h60A16,16,0,0,1,232,72Z"></path>
+          </svg>
+
+          <p class="text-slate-700 italic mb-8 relative z-10 leading-relaxed mt-4">
+            "{testi.review}"
+          </p>
+          
+          <div class="flex items-center gap-4">
+            <img 
+              src={testi.photoUrl} 
+              alt={`Foto ${testi.name}`} 
+              class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm"
+              loading="lazy"
+            />
+            <div>
+              <h4 class="font-bold text-slate-900">{testi.name}</h4>
+              <div class="flex text-yellow-400 text-sm mt-1">
+                {Array(5).fill("").map(() => (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                    <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"></path>
+                  </svg>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+</style>

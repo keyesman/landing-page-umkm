@@ -1,0 +1,56 @@
+---
+// src/components/FAQ.astro
+import { clientData } from '../data/clientConfig';
+
+const { faqs } = clientData;
+---
+
+<section id="faq" class="py-24">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-extrabold text-slate-900 sm:text-4xl mb-4">
+        Pertanyaan yang Sering Diajukan
+      </h2>
+      <p class="text-lg text-slate-600">
+        Punya pertanyaan mengenai produk kami? Temukan jawaban cepatnya di bawah ini.
+      </p>
+    </div>
+    
+    <div class="space-y-4 max-w-3xl mx-auto">
+      {faqs.map((faq) => (
+        <details class="group border border-slate-200 rounded-2xl bg-white p-6 [&_summary::-webkit-details-marker]:hidden transition-all duration-300 open:border-primary/50 open:shadow-md">
+          
+          <summary class="flex items-center justify-between cursor-pointer focus:outline-none select-none">
+            <h3 class="text-lg font-bold text-slate-900 pr-4">
+              {faq.question}
+            </h3>
+            
+            <span class="text-slate-400 group-open:text-primary group-open:rotate-180 transition-transform duration-300 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          
+          <div class="mt-4 text-slate-600 leading-relaxed border-t border-slate-100 pt-4 animate-fadeIn">
+            <p>{faq.answer}</p>
+          </div>
+          
+        </details>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Animasi halus saat jawaban terbuka */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.25s ease-out;
+  }
+</style>

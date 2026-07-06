@@ -1,0 +1,40 @@
+---
+// src/components/Footer.astro
+import { clientData } from '../data/clientConfig';
+
+const socials = [
+  { name: 'Email', href: 'mailto:admin@brandmu.com', icon: '/mail.svg' },
+  { name: 'Instagram', href: '#', icon: '/ig.svg' },
+  { name: 'TikTok', href: '#', icon: '/tiktok.svg' }
+];
+---
+
+<footer class="py-12 border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <p class="text-slate-500 text-sm">
+        &copy; {new Date().getFullYear()} {clientData.global.brandName}. All rights reserved.
+      </p>
+  
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-6">
+            {socials.map((s) => (
+              <a 
+                href={s.href} 
+                aria-label={s.name} 
+                class="block p-1 hover:opacity-70 transition-opacity"
+              >
+                <img 
+                  src={s.icon} 
+                  alt={s.name} 
+                  width="24" 
+                  height="24" 
+                  class="w-6 h-6 object-contain block"
+                  loading="lazy" 
+                />
+              </a>
+            ))}
+          </div>
+      </div>
+    </div>
+  </footer>
